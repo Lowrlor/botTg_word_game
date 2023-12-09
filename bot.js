@@ -12,7 +12,6 @@ function isWordInFile(filename, wordToCheck) {
 function findWordStartingWith(letter, filename) {
     const words = fs.readFileSync(filename, 'utf-8').split('\n');
     const matchingWords = words.filter((word) => {
-        console.log(letter)
         return word.toLowerCase().startsWith(letter.toLowerCase());
     });
   
@@ -31,7 +30,6 @@ let usedWords = [];
 let attempts = 0;
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
-    console.log(startLetter.length)
     if(msg.text === '/start') return bot.sendMessage(chatId, 'Гра почалась напиши будь-яке існуюче слово!');
     if(startLetter === msg.text[msg.text.length -1]) {
         const result = isWordInFile('sorted_list.txt', msg.text)
@@ -40,7 +38,6 @@ bot.on('message', (msg) => {
         do {
             randomWord = getRandomWord(matchingWords);
             attempts++;
-            console.log(attempts)
         } while (isWordUsed(randomWord) && attempts < 1000)
         startLetter = randomWord[randomWord.length -1]
         
